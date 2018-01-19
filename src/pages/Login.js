@@ -94,8 +94,8 @@ class Login extends Component {
               >
                 Sign in
               </button>
-              {error ? <span className="alert alert-error">{error}</span> : null}
-              {success ? <span className="alert alert-success">{success}</span> : null}
+              {error ? <div className="alert alert-error">{error}</div> : null}
+              {success ? <div className="alert alert-success">{success}</div> : null}
             </form>
           </div>
         </div>
