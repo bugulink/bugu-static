@@ -1,0 +1,55 @@
+.btn {
+  position: relative;
+  display: inline-block;
+  height: 32px;
+  margin: 0;
+  padding: 0 15px;
+  line-height: 30px;
+  list-style: none;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  user-select: none;
+  transition: all .3s cubic-bezier(.645, .045, .355, 1);
+  color: @text-color;
+  background-image: none;
+  background-color: #fafafa;
+  border-color: #d9d9d9;
+  border-radius: 4px;
+
+  &:focus, &:hover {
+    color: lighten(@primary-color, 10%);
+    border-color: lighten(@primary-color, 10%);
+  }
+
+  &.btn-primary {
+    color: #fff;
+    background-color: @primary-color;
+    border-color: @primary-color;
+
+    &:focus, &:hover {
+      color: #fff;
+      background-color: lighten(@primary-color, 10%);
+      border-color: lighten(@primary-color, 10%);
+    }
+
+  }
+
+  &.btn-lg {
+    font-size: 16px;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 38px;
+  }
+
+  &.btn-block {
+    width: 100%;
+  }
+
+}
+
+.btn, .btn:active, .btn:focus {
+  outline: 0;
+}

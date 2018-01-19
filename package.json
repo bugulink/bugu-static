@@ -1,0 +1,47 @@
+{
+  "name": "bugu-static",
+  "version": "1.0.0",
+  "description": "BuguLink frontend project",
+  "main": "index.js",
+  "scripts": {
+    "start": "dool server",
+    "build": "dool build",
+    "lint": "eslint --ext .js src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bugulink/bugu-static.git"
+  },
+  "keywords": [
+    "BuguLink",
+    "frontend",
+    "react",
+    "yax"
+  ],
+  "author": "bugu.link",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bugulink/bugu-static/issues"
+  },
+  "homepage": "https://github.com/bugulink/bugu-static#readme",
+  "dependencies": {
+    "history": "^4.7.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "yax": "^0.3.1",
+    "yax-router": "0.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1"
+  }
+}
