@@ -25,7 +25,7 @@ class Login extends Component {
     if (!isEmail(email)) {
       return this.setState({ error: 'Email is invalid' });
     }
-    dispatch({
+    return dispatch({
       type: 'user/sendCode',
       payload: email
     }).then(() => {
@@ -49,7 +49,9 @@ class Login extends Component {
   }
 
   render() {
-    const { email, code, error, success } = this.state;
+    const {
+      email, code, error, success
+    } = this.state;
     return (
       <div className="container login-container">
         <div className="login-form">
@@ -65,7 +67,7 @@ class Login extends Component {
                     className="input"
                     placeholder="Your Email"
                     value={email}
-                    onChange={(e) => this.setState({ email: e.target.value })}
+                    onChange={e => this.setState({ email: e.target.value })}
                   />
                 </div>
               </div>
@@ -79,7 +81,7 @@ class Login extends Component {
                     className="input"
                     placeholder="Security Code"
                     value={code}
-                    onChange={(e) => this.setState({ code: e.target.value })}
+                    onChange={e => this.setState({ code: e.target.value })}
                   />
                   <span className="input-suffix">
                     <button type="button" className="btn btn-lg" onClick={() => this.sendCode()}>Send code</button>
@@ -89,7 +91,7 @@ class Login extends Component {
               <button
                 type="button"
                 className="btn btn-primary btn-lg btn-block"
-                disabled={!Boolean(email && code)}
+                disabled={!(email && code)}
                 onClick={() => this.login()}
               >
                 Sign in

@@ -9,6 +9,7 @@ rules:
   camelcase: 0
   comma-dangle: 0
   semi: [2, always]
+  prefer-promise-reject-errors: 0
   no-underscore-dangle: 0
   object-curly-spacing: [2, always]
   react/no-danger: 0
