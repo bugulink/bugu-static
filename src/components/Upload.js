@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-
+import File from './File';
 import './Upload.less';
 
 function preventEvent(e) {
   e.preventDefault();
+}
+
+let index = 0;
+function uuid() {
+  index++;
+  return index;
 }
 
 export default class Uploader extends Component {
@@ -26,7 +32,17 @@ export default class Uploader extends Component {
 
   addFiles(items) {
     const { files } = this.state;
+    for (let i = 0; i < items.length; i++) {
+      items[i].id = uuid();
+    }
     this.setState({ files: [...files, ...items] });
+  }
+
+  delete(id) {
+    const { files } = this.state;
+    this.setState({
+      files: files.filter(f => f.id !== id)
+    });
   }
 
   render() {
@@ -55,25 +71,13 @@ export default class Uploader extends Component {
           />
         </div>
         <div className="file-list">
-          {files.map((file) => {
-            const width = '45%';
-            const key = `${file.name}_${file.size}_${file.lastModified}`;
-            return (
-              <div className="file-item" key={key}>
-                <a href="#" className="file-link">
-                  <i className="icon icon-file" />
-                  <span>{file.name}</span>
-                </a>
-                <div className="file-action">
-                  <a href="#"><i className="icon icon-stop" /></a>
-                  <a href="#"><i className="icon icon-close" /></a>
-                </div>
-                <div className="progress-bar">
-                  <div className="progress" style={{ width }} />
-                </div>
-              </div>
-            );
-          })}
+          {files.map(file => (
+            <File
+              key={file.id}
+              file={file}
+              onDelete={() => this.delete(file.id)}
+            />
+          ))}
         </div>
       </div>
     );
