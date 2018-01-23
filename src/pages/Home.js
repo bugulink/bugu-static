@@ -1,19 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Upload from '../components/Upload';
 
 import './Home.less';
 
 function Home({ user }) {
   return (
     <div className="container">
-      {user ? (
-        <div className="drop-block">
-          <i className="icon icon-upload" />
-          <h4>Drop your files here!</h4>
-          <p>You can drop multiple files, max 2G each.</p>
-        </div>
-      ) : (
+      {user ? <Upload /> : (
         <div className="home-intro">
           <h3>Sharing Your Files</h3>
           <p>Free &bull; Fast &bull; Secure &bull; Simplicity</p>

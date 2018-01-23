@@ -9,7 +9,7 @@ import './Login.less';
 class Login extends Component {
   static propTypes = {
     dispatch: PropTypes.any.isRequired
-  }
+  };
 
   state = {
     sending: false,
@@ -17,7 +17,7 @@ class Login extends Component {
     isFirst: true,
     email: '',
     code: ''
-  }
+  };
 
   sendCode() {
     const { dispatch } = this.props;
