@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import io, { CancelToken } from 'axios';
-import { encode } from '../utils';
+import { CancelToken } from 'axios';
+import { makeRequest } from '../utils';
 import fetch from '../request';
 
 // Chunk size 4M (force)
 const CHUNK_SIZE = 4 * 1024 * 1024;
 const HOST = '//up.qiniu.com';
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class Chunk {
   constructor(file, offset, opts) {
@@ -16,7 +15,6 @@ class Chunk {
     this.from = offset * CHUNK_SIZE;
     this.to = Math.min(file.size, (offset + 1) * CHUNK_SIZE);
     this.total = 0;
-    this.retry = 0;
     this.loaded = 0;
     this.finished = false;
     this.opts = opts;
@@ -47,27 +45,10 @@ class Chunk {
       this.up = up;
     }
 
-    const $ = this;
-    function request(url, data, config) {
-      return io.post(url, data, config)
-        .then(res => Promise.resolve(res.data))
-        .catch((e) => {
-          if (io.isCancel(e)) {
-            $.retry = 0;
-            return Promise.resolve(null);
-          }
-          $.retry++;
-          if ($.retry === 3) {
-            return Promise.reject(e);
-          }
-          // Delay one second
-          return delay(1000).then(() => request(url, data, config));
-        });
-    }
-
     this.cts = CancelToken.source();
     const url = `${HOST}/mkblk/${this.to - this.from}`;
-    request(url, this.chunkData(), {
+    const req = makeRequest(3);
+    req(url, this.chunkData(), {
       headers: {
         Authorization: `UpToken ${this.up.token}`
       },
@@ -166,15 +147,16 @@ export default class File extends Component {
     this.count++;
     if (this.count === this.chunks.length) {
       const { file } = this.props;
-      const path = `${this.up.prefix}${file.name}`;
-      const url = `${HOST}/mkfile/${file.size}/key/${encode(path)}`;
+      const key = `${this.up.prefix}${file.name}`;
       const data = this.chunks.map(c => c.data.ctx).join(',');
-      io.post(url, data, {
-        headers: {
-          Authorization: `UpToken ${this.up.token}`
-        }
+      fetch.post('/upload', {
+        key,
+        data,
+        name: file.name,
+        size: file.size,
+        token: this.up.token
       }).then((res) => {
-        console.log(res.data);
+        console.log(res);
         this.setState({ finished: true });
       });
     }

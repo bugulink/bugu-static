@@ -27,7 +27,10 @@ export default class Uploader extends Component {
   }
 
   handleChange(e) {
-    this.addFiles(e.target.files);
+    if (e.target.value) {
+      this.addFiles(e.target.files);
+      e.target.value = '';
+    }
   }
 
   addFiles(items) {
