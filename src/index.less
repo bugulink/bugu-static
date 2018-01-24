@@ -66,10 +66,6 @@ a {
   transition: color .3s;
 }
 
-a:focus {
-  text-decoration: underline;
-}
-
 a:hover {
   color: darken(@primary-color, 15%);
 }
@@ -78,7 +74,7 @@ a:active {
   color: darken(@primary-color, 10%);
 }
 
-a:active, a:hover {
+a:active, a:hover, a:focus {
   outline: 0;
   text-decoration: none;
 }
