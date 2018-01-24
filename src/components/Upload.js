@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import File from './File';
+import { message } from '../utils';
+import fetch from '../request';
+
 import './Upload.less';
 
 function preventEvent(e) {
@@ -41,11 +44,21 @@ export default class Uploader extends Component {
     this.setState({ files: [...files, ...items] });
   }
 
-  delete(id) {
-    const { files } = this.state;
-    this.setState({
-      files: files.filter(f => f.id !== id)
-    });
+  delete(file) {
+    const { id, done, info } = file;
+    const remove = () => {
+      const { files } = this.state;
+      this.setState({
+        files: files.filter(f => f.id !== id)
+      });
+    };
+    if (done) {
+      fetch.post('/file/remove', { id: info.id })
+        .then(remove)
+        .catch(() => message.error('Remove file failed! Please try again.'));
+    } else {
+      remove();
+    }
   }
 
   update(id, info) {
@@ -90,7 +103,7 @@ export default class Uploader extends Component {
             <File
               key={file.id}
               file={file}
-              onDelete={() => this.delete(file.id)}
+              onDelete={() => this.delete(file)}
               onFinish={info => this.update(file.id, info)}
             />
           ))}
