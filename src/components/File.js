@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CancelToken } from 'axios';
-import { makeRequest } from '../utils';
+import { makeRequest, message } from '../utils';
 import fetch from '../request';
 
 // Chunk size 4M (force)
@@ -67,6 +67,8 @@ class Chunk {
         this.opts.change();
         this.opts.finish();
       }
+    }).catch(() => {
+      message.error('Something wrong! Please restart again.');
     });
   }
   stop() {
@@ -169,7 +171,8 @@ export default class File extends Component {
     }).then((res) => {
       onFinish(res.data);
       this.setState({ status: 'finished' });
-    }).catch(e => {
+    }).catch(() => {
+      message.error('Upload file failed! Please retry again.');
       this.setState({ status: 'failed' });
     });
   }

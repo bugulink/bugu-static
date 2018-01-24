@@ -1,0 +1,80 @@
+#toast-root {
+  visibility: hidden;
+  position: fixed;
+  z-index: 1010;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 20px;
+  text-align: center;
+
+  .toast-main {
+    display: inline-block;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+
+    i {
+      display: block;
+      position: absolute;
+      line-height: 40px;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      border-top-left-radius: 2px;
+      border-bottom-left-radius: 2px;
+      color: #fff;
+      background-color: #20a0ff;
+    }
+
+    span {
+      display: inline-block;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 40px;
+      padding: 0 15px;
+      color: #777;
+    }
+
+    &.success i {
+      background-color: #13ce66;
+    }
+
+    &.error i {
+      background-color: #ff4949;
+    }
+
+  }
+
+  &.show {
+    visibility: visible;
+    animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+  }
+
+}
+
+@keyframes fadeIn {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+
+  to {
+    top: 20px;
+    opacity: 1;
+  }
+
+}
+
+@keyframes fadeOut {
+  from {
+    top: 20px;
+    opacity: 1;
+  }
+
+  to {
+    top: 0;
+    opacity: 0;
+  }
+
+}

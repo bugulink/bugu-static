@@ -34,15 +34,23 @@ class Login extends Component {
       const timer = window.setInterval(() => {
         count--;
         if (count === 0) {
+          this.timer = null;
           window.clearInterval(timer);
           this.setState({ sending: false });
         } else {
           this.setState({ count });
         }
       }, 1000);
+      this.timer = timer;
     }).catch(() => {
       this.setState({ error: 'Failed to send mail. Please try again.' });
     });
+  }
+
+  componentWillUnmount() {
+    if (this.timer) {
+      window.clearInterval(this.timer);
+    }
   }
 
   checkEmail(email) {
