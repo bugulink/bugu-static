@@ -5,78 +5,68 @@
   background: #fff;
   border-bottom: 1px solid #e8e8e8;
 
-  .container {
-    max-width: 1056px;
-    padding-left: 16px;
-    padding-right: 16px;
-    margin-left: auto;
-    margin-right: auto;
+  .logo {
+    float: left;
+    position: relative;
     height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
 
-    .logo {
-      float: left;
-      position: relative;
-      height: 100%;
+    .logo-link {
       display: flex;
       align-items: center;
-      margin-right: 40px;
 
-      .logo-link {
-        display: flex;
-        align-items: center;
-
-        .image {
-          display: inline-block;
-          width: 32px;
-          height: 32px;
-          margin-right: 10px;
-          background: url(../assets/logo.png) no-repeat center;
-          background-size: contain;
-        }
-
+      .image {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        margin-right: 10px;
+        background: url(../assets/logo.png) no-repeat center;
+        background-size: contain;
       }
 
     }
 
-    .header-nav {
-      float: right;
+  }
+
+  .header-nav {
+    float: right;
+    display: flex;
+    align-items: center;
+    z-index: 400;
+    height: 100%;
+
+    .user-nav {
       display: flex;
       align-items: center;
-      z-index: 400;
-      height: 100%;
 
-      .user-nav {
-        display: flex;
-        align-items: center;
-
-        .nav-link {
-          padding: 0 12px;
-          font-size: 22px;
-          line-height: 1;
-          text-decoration: none;
-        }
-
-        .dropdown {
-          padding: 5px 12px;
-        }
-
-        .user-info .avatar {
-          display: inline-block;
-          width: 30px;
-          height: 30px;
-          line-height: 30px;
-          border-radius: 50%;
-          text-align: center;
-          background-color: #f1f1f1;
-        }
-
+      .nav-link {
+        padding: 0 12px;
+        font-size: 22px;
+        line-height: 1;
+        text-decoration: none;
       }
 
-      .login {
-        display: flex;
-        align-items: center;
+      .dropdown {
+        padding: 5px 12px;
       }
 
+      .user-info .avatar {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 50%;
+        text-align: center;
+        background-color: #f1f1f1;
+      }
+
+    }
+
+    .login {
+      display: flex;
+      align-items: center;
     }
 
   }

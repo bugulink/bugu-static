@@ -7,7 +7,7 @@ import './Home.less';
 
 function Home({ user }) {
   return (
-    <div className="container">
+    <div className="home-section">
       {user ? <Upload /> : (
         <div className="home-intro">
           <h3>Sharing Your Files</h3>

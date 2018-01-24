@@ -11,7 +11,7 @@ const LoginLink = () => <Link to="/login" className="btn btn-primary">Sign in</L
 function Header({ user }) {
   return (
     <div className="header">
-      <div className="container clearfix">
+      <div className="layout-container clearfix">
         <div className="logo">
           <Link to="/" className="logo-link">
             <span className="image" />

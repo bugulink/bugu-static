@@ -84,7 +84,7 @@ class Login extends Component {
       email, code, error, success, sending, count
     } = this.state;
     return (
-      <div className="container login-container">
+      <div className="login-section">
         <div className="login-form">
           <div className="main">
             <form className="form login-content">

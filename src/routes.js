@@ -15,16 +15,18 @@ import Download from './pages/Download';
 
 const Routes = ({ history, user }) => (
   <Router history={history}>
-    <div>
+    <div className="main">
       <Header user={user} />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/files" component={Files} />
-        <Route exact path="/links" component={Links} />
-        <Route path="/link/:linkId" component={Link} />
-        <Route path="/download/:linkId" component={Download} />
-      </Switch>
+      <div className="main-wrapper">
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/files" component={Files} />
+          <Route exact path="/links" component={Links} />
+          <Route path="/link/:linkId" component={Link} />
+          <Route path="/download/:linkId" component={Download} />
+        </Switch>
+      </div>
       <Footer />
     </div>
   </Router>
