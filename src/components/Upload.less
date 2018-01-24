@@ -1,9 +1,26 @@
 @import '../style/variables.less';
 
+.upload-main {
+  margin: 0 auto;
+  max-width: 500px;
+
+  .link-btns {
+    margin-top: 15px;
+    padding-top: 15px;
+    text-align: center;
+    border-top: 1px solid #eee;
+
+    span {
+      color: @text-muted-color;
+      margin: 0 20px;
+    }
+
+  }
+
+}
+
 .drop-block {
   position: relative;
-  margin: 0 auto;
-  max-width: 400px;
   padding: 20px;
   text-align: center;
   border: 2px dashed #ccc;
@@ -13,6 +30,7 @@
 
   &:hover {
     opacity: .8;
+    border-color: @primary-color;
   }
 
   i {
@@ -39,8 +57,8 @@
 }
 
 .file-list {
-  margin: 32px auto 0 auto;
-  max-width: 600px;
+  margin-top: 20px;
+  min-height: 60px;
 
   .file-item {
     position: relative;
@@ -82,6 +100,7 @@
       }
 
     }
+
     .progress-bar {
       position: absolute;
       width: 100%;
@@ -90,12 +109,14 @@
       bottom: 0;
       background-color: #e4e8f1;
       border-radius: 5px;
+
       .progress {
         float: left;
         height: 2px;
-        background-color: #20a0ff;
+        background-color: @primary-color;
         border-radius: 5px;
       }
+
     }
 
   }

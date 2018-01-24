@@ -87,13 +87,14 @@ class Chunk {
 export default class File extends Component {
   static propTypes = {
     file: PropTypes.any.isRequired,
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func.isRequired,
+    onFinish: PropTypes.func.isRequired
   };
 
   state = {
     progress: 0,
     paused: false,
-    finished: false
+    status: 'uploading'
   };
 
   count = 0;
@@ -146,20 +147,31 @@ export default class File extends Component {
   finish() {
     this.count++;
     if (this.count === this.chunks.length) {
-      const { file } = this.props;
-      const key = `${this.up.prefix}${file.name}`;
-      const data = this.chunks.map(c => c.data.ctx).join(',');
-      fetch.post('/upload', {
-        key,
-        data,
-        name: file.name,
-        size: file.size,
-        token: this.up.token
-      }).then((res) => {
-        console.log(res);
-        this.setState({ finished: true });
-      });
+      this.upload();
     }
+  }
+
+  upload(e) {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const { file, onFinish } = this.props;
+    const key = `${this.up.prefix}${file.name}`;
+    const data = this.chunks.map(c => c.data.ctx).join(',');
+
+    fetch.post('/upload', {
+      key,
+      data,
+      name: file.name,
+      size: file.size,
+      token: this.up.token
+    }).then((res) => {
+      onFinish(res.data);
+      this.setState({ status: 'finished' });
+    }).catch(e => {
+      this.setState({ status: 'failed' });
+    });
   }
 
   delete(e) {
@@ -170,10 +182,13 @@ export default class File extends Component {
 
   render() {
     const { file } = this.props;
-    const { progress, paused, finished } = this.state;
+    const { progress, paused, status } = this.state;
     const width = `${Math.floor(progress * 100)}%`;
     const actions = () => {
-      if (finished) return null;
+      if (status === 'finished') return null;
+      if (status === 'failed') {
+        return <a href="#" onClick={e => this.upload(e)}><i className="icon icon-refresh" /></a>;
+      }
       if (paused) {
         return <a href="#" onClick={e => this.resume(e)}><i className="icon icon-play" /></a>;
       }
@@ -189,7 +204,7 @@ export default class File extends Component {
           {actions()}
           <a href="#" onClick={e => this.delete(e)}><i className="icon icon-close" /></a>
         </div>
-        {finished ? null : (
+        {status === 'finished' ? null : (
           <div className="progress-bar">
             <div className="progress" style={{ width }} />
           </div>

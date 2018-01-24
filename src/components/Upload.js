@@ -48,10 +48,24 @@ export default class Uploader extends Component {
     });
   }
 
+  update(id, info) {
+    const { files } = this.state;
+    files.forEach(file => {
+      if (file.id === id) {
+        file.done = true;
+        file.info = info;
+      }
+    });
+    this.setState({ files });
+  }
+
   render() {
     const { files } = this.state;
+    const isAllDone = files.length && files.reduce((pre, cur) => {
+      return pre && cur.done;
+    }, true);
     return (
-      <div>
+      <div className="upload-main">
         <div
           role="button"
           tabIndex="0"
@@ -79,8 +93,14 @@ export default class Uploader extends Component {
               key={file.id}
               file={file}
               onDelete={() => this.delete(file.id)}
+              onFinish={(info) => this.update(file.id, info)}
             />
           ))}
+        </div>
+        <div className="link-btns">
+          <button className="btn btn-primary btn-lg" disabled={!isAllDone}>Make link</button>
+          <span>OR</span>
+          <button className="btn btn-primary btn-lg" disabled={!isAllDone}>Send email</button>
         </div>
       </div>
     );
