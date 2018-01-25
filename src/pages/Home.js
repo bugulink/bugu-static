@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { message } from '../utils';
 import Upload from '../components/Upload';
 import LinkMaker from '../components/LinkMaker';
+import Modal from '../components/Modal';
+import TagInput from '../components/TagInput';
 
 import './Home.less';
 
@@ -17,7 +20,10 @@ class Home extends Component {
 
   state = {
     list: null,
-    step: 'upload'
+    step: 'upload',
+    showModal: false,
+    mails: [],
+    msg: ''
   };
 
   makeLink(list) {
@@ -25,12 +31,42 @@ class Home extends Component {
   }
 
   sendMail(list) {
-    this.setState({ step: 'mail', list });
+    this.setState({ showModal: true, list });
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  back() {
+    this.setState({
+      step: 'upload',
+      mails: [],
+      msg: ''
+    });
+  }
+
+  handleSend() {
+    const { mails } = this.state;
+    if (mails.length === 0) {
+      message.error('At least 1 people.');
+      return;
+    }
+    if (mails.length > 20) {
+      message.error('Up to 20 people');
+      return;
+    }
+    this.setState({
+      step: 'mail',
+      showModal: false
+    });
   }
 
   render() {
     const { user } = this.props;
-    const { step, list } = this.state;
+    const {
+      step, list, showModal, mails, msg
+    } = this.state;
     const child = () => {
       if (!user) {
         return (
@@ -44,22 +80,65 @@ class Home extends Component {
       if (step === 'upload') {
         return (
           <Upload
-            onMake={d => this.makeLink(d)}
-            onSend={d => this.sendMail(d)}
+            onMake={data => this.makeLink(data)}
+            onSend={data => this.sendMail(data)}
           />
         );
       }
       if (step === 'link') {
-        return <LinkMaker list={list} onBack={() => this.setState({ step: 'upload' })} />;
+        return (
+          <LinkMaker
+            list={list}
+            onBack={() => this.back()}
+          />
+        );
       }
       if (step === 'mail') {
-        return <div>Mail</div>;
+        return (
+          <LinkMaker
+            list={list}
+            mails={mails}
+            message={msg}
+            onBack={() => this.back()}
+          />
+        );
       }
       return null;
     };
+    const change = data => this.setState({ mails: data });
     return (
       <div className="home-section">
         {child()}
+        <Modal
+          show={showModal}
+          title="Send email via bugu.link"
+          onClose={() => this.close()}
+        >
+          <div className="form mail-form">
+            <TagInput data={mails} placeholder="Email to" onChange={change} />
+            <div className="form-item">
+              <div className="form-control">
+                <textarea className="input" value={msg} rows="3" placeholder="Message" />
+              </div>
+            </div>
+            <div className="btns">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => this.handleSend()}
+              >
+                Send
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => this.close()}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
     );
   }

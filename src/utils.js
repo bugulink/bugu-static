@@ -26,7 +26,7 @@ export function makeRequest(maxRetry, method = 'post') {
       });
   };
 }
-
+let timer = null;
 export function toast(msg, type, icon) {
   const id = 'toast-root';
   let el = document.getElementById(id);
@@ -35,16 +35,22 @@ export function toast(msg, type, icon) {
     el.setAttribute('id', id);
     document.body.appendChild(el);
   }
-  el.innerHTML = `
-    <div class="toast-main ${type}">
-      <i class="icon ${icon}"></i>
-      <span>${msg}</span>
-    </div>
-  `;
-  el.className = 'show';
-  window.setTimeout(() => {
+  if (timer) {
     el.className = '';
-  }, 5000);
+    window.clearInterval(timer);
+  }
+  setTimeout(() => {
+    el.innerHTML = `
+      <div class="toast-main ${type}">
+        <i class="icon ${icon}"></i>
+        <span>${msg}</span>
+      </div>
+    `;
+    el.className = 'show';
+    timer = window.setTimeout(() => {
+      el.className = '';
+    }, 5000);
+  }, 0);
 }
 
 export const message = {
