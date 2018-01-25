@@ -49,11 +49,11 @@ class Home extends Component {
   handleSend() {
     const { mails } = this.state;
     if (mails.length === 0) {
-      message.error('At least 1 people.');
+      message.error('At least 1 people!');
       return;
     }
     if (mails.length > 20) {
-      message.error('Up to 20 people');
+      message.error('Up to 20 people!');
       return;
     }
     this.setState({
@@ -98,7 +98,7 @@ class Home extends Component {
           <LinkMaker
             list={list}
             mails={mails}
-            message={msg}
+            msg={msg}
             onBack={() => this.back()}
           />
         );
@@ -118,7 +118,13 @@ class Home extends Component {
             <TagInput data={mails} placeholder="Email to" onChange={change} />
             <div className="form-item">
               <div className="form-control">
-                <textarea className="input" value={msg} rows="3" placeholder="Message" />
+                <textarea
+                  rows="3"
+                  value={msg}
+                  className="input"
+                  placeholder="Message"
+                  onChange={e => this.setState({ msg: e.target.value })}
+                />
               </div>
             </div>
             <div className="btns">

@@ -7,8 +7,15 @@ import './LinkMaker.less';
 
 export default class LinkMaker extends Component {
   static propTypes = {
+    msg: PropTypes.string,
+    mails: PropTypes.array,
     list: PropTypes.array.isRequired,
     onBack: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    mails: null,
+    msg: ''
   };
 
   state = {
@@ -21,17 +28,20 @@ export default class LinkMaker extends Component {
   }
 
   makeLink() {
-    const { list } = this.props;
+    const { list, mails, msg } = this.props;
     this.setState({ status: 'loading' });
     fetch.post('/link/add', {
-      ids: list.map(f => f.id)
+      ids: list.map(f => f.id),
+      receiver: mails,
+      message: msg
     }).then((res) => {
       this.setState({
         status: 'done',
         link: res.data
       });
     }).catch(() => {
-      message.error('Make link failed! Please try again.');
+      const txt = mails ? 'Send email' : 'Make link';
+      message.error(`${txt} failed! Please try again.`);
       this.setState({ status: 'failed' });
     });
   }
@@ -41,6 +51,7 @@ export default class LinkMaker extends Component {
   }
 
   render() {
+    const { mails } = this.props;
     const { status, link } = this.state;
     const path = `${window.location.protocol}//${window.location.host}/download/`;
     const copy = (e) => {
@@ -58,18 +69,20 @@ export default class LinkMaker extends Component {
     };
     const child = () => {
       if (status === 'loading') {
+        const txt = mails ? 'Sending email' : 'Making link';
         return (
           <div className="link-body">
             <i className="icon icon-loading loading" />
-            <div className="muted">Making link...</div>
+            <div className="muted">{txt}...</div>
           </div>
         );
       }
       if (status === 'failed') {
+        const txt = mails ? 'Send email' : 'Make link';
         return (
           <div className="link-body">
             <i className="icon icon-close-r error" />
-            <div className="muted">Make link failed! Please retry.</div>
+            <div className="muted">{txt} failed! Please retry.</div>
             <div className="btns">
               <button
                 className="btn btn-primary"
@@ -87,11 +100,13 @@ export default class LinkMaker extends Component {
       }
       if (status === 'done') {
         const url = `${path}${link.id}`;
+        const title = mails ? 'Send email' : 'Make link';
+        const txt = mails ? 'You can also share' : 'Copy and share';
         return (
           <div className="link-body">
             <i className="icon icon-check-r success" />
-            <h3>You are done!</h3>
-            <div className="muted">Copy your download link and code.</div>
+            <h3>{title} success!</h3>
+            <div className="muted">{txt} your download link and code.</div>
             <div className="form">
               <div className="form-item">
                 <div className="form-control">
