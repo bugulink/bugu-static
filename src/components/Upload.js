@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import File from './File';
 import { message } from '../utils';
 import fetch from '../request';
@@ -16,6 +17,10 @@ function uuid() {
 }
 
 export default class Uploader extends Component {
+  static propTypes = {
+    onMake: PropTypes.func.isRequired,
+    onSend: PropTypes.func.isRequired
+  };
   state = {
     files: []
   };
@@ -73,8 +78,10 @@ export default class Uploader extends Component {
   }
 
   render() {
+    const { onMake, onSend } = this.props;
     const { files } = this.state;
     const isAllDone = files.length && files.reduce((pre, cur) => pre && cur.done, true);
+    const list = files.map(f => f.info);
     return (
       <div className="upload-main">
         <div
@@ -109,9 +116,19 @@ export default class Uploader extends Component {
           ))}
         </div>
         <div className="link-btns">
-          <button className="btn btn-primary btn-lg" disabled={!isAllDone}>Make link</button>
+          <button
+            disabled={!isAllDone}
+            className="btn btn-primary btn-lg"
+            onClick={() => onMake(list)}
+          >Make link
+          </button>
           <span>OR</span>
-          <button className="btn btn-primary btn-lg" disabled={!isAllDone}>Send email</button>
+          <button
+            disabled={!isAllDone}
+            className="btn btn-primary btn-lg"
+            onClick={() => onSend(list)}
+          >Send email
+          </button>
         </div>
       </div>
     );
