@@ -1,0 +1,98 @@
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  font-family: @font-family;
+  font-size: 14px;
+  line-height: 1.5;
+  color: @text-color;
+  background-color: @background-color;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
+}
+
+a:focus {
+  text-decoration: none;
+}
+
+ol, ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+p {
+  margin-bottom: 0;
+}
+
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+.clearfix {
+  display: block;
+  zoom: 1;
+}
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+a {
+  color: @primary-color;
+  background-color: transparent;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  transition: color .3s;
+}
+
+a:hover {
+  color: darken(@primary-color, 15%);
+}
+
+a:active {
+  color: darken(@primary-color, 10%);
+}
+
+a:active, a:hover, a:focus {
+  outline: 0;
+  text-decoration: none;
+}
+
+a[disabled] {
+  color: rgba(0, 0, 0, .25);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.main {
+  position: relative;
+  margin: 0 auto;
+}
+
+.main-wrapper {
+  width: 100%;
+  min-height: ~"calc(100vh - 60px - 54px)";
+}
+
+.layout-container {
+  max-width: 1056px;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+}

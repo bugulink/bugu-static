@@ -1,6 +1,7 @@
 module.exports = {
   entry: {
-    index: './src/index.js'
+    index: './src/index.js',
+    'download.css': './src/download.less'
   },
   babelPlugins: ['transform-runtime'],
   devServer: {

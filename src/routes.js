@@ -11,7 +11,6 @@ import Login from './pages/Login';
 import Files from './pages/Files';
 import Links from './pages/Links';
 import Link from './pages/Link';
-import Download from './pages/Download';
 
 const Routes = ({ history, user }) => (
   <Router history={history}>
@@ -24,7 +23,6 @@ const Routes = ({ history, user }) => (
           <Route exact path="/files" component={Files} />
           <Route exact path="/links" component={Links} />
           <Route path="/link/:linkId" component={Link} />
-          <Route path="/download/:linkId" component={Download} />
         </Switch>
       </div>
       <Footer />
