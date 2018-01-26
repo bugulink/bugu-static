@@ -1,9 +1,42 @@
 .files-section {
   padding: 48px 0 32px;
+
   .table {
+    table-layout: fixed;
     width: 100%;
+
+    .ellipsis {
+      max-width: 100%;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .center {
       text-align: center;
     }
+
+    .checkbox {
+      font-weight: normal;
+      font-size: 16px;
+    }
+
+    .disabled {
+      color: #888;
+
+      .checkbox {
+        color: #ccc;
+        cursor: not-allowed;
+      }
+
+    }
+
   }
+
+  .load-more {
+    padding: 30px 0;
+    text-align: center;
+  }
+
 }

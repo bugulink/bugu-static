@@ -13,8 +13,13 @@
   background: #f0f1f4;
 }
 
-.table.table-hover tbody tr:hover {
-  background: #f0f1f4;
+.table.table-hover tbody tr {
+  transition: all .3s;
+
+  &:hover {
+    background: #f0f1f4;
+  }
+
 }
 
 .table.table-scroll {
