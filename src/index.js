@@ -6,6 +6,7 @@ import yax from 'yax';
 import router, { push } from 'yax-router';
 
 import './index.less';
+import { message } from './utils';
 import user from './models/user';
 import link from './models/link';
 import file from './models/file';
@@ -28,9 +29,22 @@ const store = yax({
   modules: { user, link, file },
 }, router(history));
 
-// store.onRoute('/files', handlers.files);
-// store.onRoute('/links', handlers.links);
-// store.onRoute('/link/:linkId', handlers.link);
+store.onRoute('/files', ({ dispatch }) => {
+  dispatch({
+    type: 'file/getList',
+    payload: true
+  }).catch(() => {
+    message.error('Load files failed! Please try again.');
+  });
+});
+store.onRoute('/links', ({ dispatch }) => {
+  dispatch({
+    type: 'link/getList',
+    payload: true
+  }).catch(() => {
+    message.error('Load files failed! Please try again.');
+  });
+});
 
 store.dispatch(push(window.location.pathname));
 

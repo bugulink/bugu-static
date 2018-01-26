@@ -1,0 +1,34 @@
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.table.table-striped tbody tr:nth-of-type(odd) {
+  background: #f8f9fa;
+}
+
+.table tbody tr.active, .table.table-striped tbody tr.active {
+  background: #f0f1f4;
+}
+
+.table.table-hover tbody tr:hover {
+  background: #f0f1f4;
+}
+
+.table.table-scroll {
+  display: block;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  white-space: nowrap;
+}
+
+.table td, .table th {
+  border-bottom: 1px solid #e7e9ed;
+  padding: 12px 8px;
+}
+
+.table th {
+  border-bottom-width: 2px;
+}

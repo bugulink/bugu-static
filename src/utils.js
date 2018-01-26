@@ -4,6 +4,35 @@ export function isEmail(str) {
   return /^[^;]+@[^;]+\.[^;]+$/.test(str);
 }
 
+function pluralize(time, label) {
+  if (time === 1) {
+    return time + label;
+  }
+  return `${time}${label}s`;
+}
+
+export function remain(ttl) {
+  if (ttl <= 0) {
+    return 'Expired';
+  }
+  const { round } = Math;
+  if (ttl < 3600) {
+    return pluralize(round(ttl / 60), ' minute');
+  } else if (ttl < 86400) {
+    return pluralize(round(ttl / 3600), ' hour');
+  }
+
+  return pluralize(round(ttl / 86400), ' day');
+}
+
+const mags = ' KMGTPEZY';
+export function humanSize(bytes, precision) {
+  const magnitude = Math.min(Math.log(bytes) / Math.log(1024) | 0, mags.length - 1);
+  const result = bytes / Math.pow(1024, magnitude);
+  const suffix = mags[magnitude].trim() + 'B';
+  return result.toFixed(precision) + suffix;
+}
+
 export function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -26,6 +55,7 @@ export function makeRequest(maxRetry, method = 'post') {
       });
   };
 }
+
 let timer = null;
 export function toast(msg, type, icon) {
   const id = 'toast-root';
