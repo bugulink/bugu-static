@@ -24,7 +24,9 @@ export default {
     }
   },
   reducers: {
-    getListDone(state, { offset, count, rows, files, isReload }) {
+    getListDone(state, {
+      offset, count, rows, files, isReload
+    }) {
       const list = isReload ? rows : [...state.list, ...rows];
       const tmp = isReload ? files : [...state.files, ...files];
       return {

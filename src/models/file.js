@@ -23,7 +23,9 @@ export default {
     }
   },
   reducers: {
-    getListDone(state, { offset, count, rows, isReload }) {
+    getListDone(state, {
+      offset, count, rows, isReload
+    }) {
       const list = isReload ? rows : [...state.list, ...rows];
       return {
         ...state,
@@ -37,7 +39,7 @@ export default {
       return { ...state, list };
     },
     select(state, id) {
-      const list = state.list.map(f => {
+      const list = state.list.map((f) => {
         if (f.id === id) {
           return { ...f, selected: !f.selected };
         }

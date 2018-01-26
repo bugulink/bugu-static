@@ -28,8 +28,8 @@ export function remain(ttl) {
 const mags = ' KMGTPEZY';
 export function humanSize(bytes, precision) {
   const magnitude = Math.min(Math.log(bytes) / Math.log(1024) | 0, mags.length - 1);
-  const result = bytes / Math.pow(1024, magnitude);
-  const suffix = mags[magnitude].trim() + 'B';
+  const result = bytes / (1024 ** magnitude);
+  const suffix = `${mags[magnitude].trim()}B`;
   return result.toFixed(precision) + suffix;
 }
 

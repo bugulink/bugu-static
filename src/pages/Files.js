@@ -5,7 +5,9 @@ import { remain, humanSize, message } from '../utils';
 
 import './Files.less';
 
-function Files({ list, count, offset, dispatch }) {
+function Files({
+  list, count, offset, dispatch
+}) {
   const selected = list.reduce((p, c) => (p && c.selected), true);
   const selectAll = (e) => {
     e.preventDefault();
@@ -47,7 +49,7 @@ function Files({ list, count, offset, dispatch }) {
             </tr>
           </thead>
           <tbody>
-            {list.map(file => {
+            {list.map((file) => {
               const date = new Date(file.createdAt);
               const exp = date.getTime() / 1000 + file.ttl;
               const now = Date.now() / 1000;
@@ -55,7 +57,7 @@ function Files({ list, count, offset, dispatch }) {
               return (
                 <tr key={file.id} className={time <= 0 ? 'disabled' : ''}>
                   <td className="center">
-                    <a href="#" className="checkbox" onClick={(e) => select(e, file.id)}>
+                    <a href="#" className="checkbox" onClick={e => select(e, file.id)}>
                       {file.selected
                         ? <i className="icon icon-checked" />
                         : <i className="icon icon-unchecked" />}
@@ -83,6 +85,13 @@ function Files({ list, count, offset, dispatch }) {
     </div>
   );
 }
+
+Files.propTypes = {
+  list: PropTypes.array.isRequired,
+  count: PropTypes.number.isRequired,
+  offset: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
 
 function mapState({ file }) {
   return file;
