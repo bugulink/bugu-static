@@ -34,10 +34,6 @@ export default {
         list
       };
     },
-    selectAll(state, selected) {
-      const list = state.list.map(f => ({ ...f, selected }));
-      return { ...state, list };
-    },
     select(state, id) {
       const list = state.list.map((f) => {
         if (f.id === id) {

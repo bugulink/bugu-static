@@ -8,11 +8,6 @@ import './Files.less';
 function Files({
   list, count, offset, dispatch
 }) {
-  const selected = list.reduce((p, c) => (p && c.selected), true);
-  const selectAll = (e) => {
-    e.preventDefault();
-    dispatch({ type: 'file/selectAll', payload: !selected });
-  };
   const select = (e, id) => {
     e.preventDefault();
     dispatch({ type: 'file/select', payload: id });
@@ -35,13 +30,7 @@ function Files({
           </colgroup>
           <thead>
             <tr>
-              <th className="center">
-                <a href="#" className="checkbox" onClick={selectAll}>
-                  {selected
-                    ? <i className="icon icon-checked" />
-                    : <i className="icon icon-unchecked" />}
-                </a>
-              </th>
+              <th />
               <th>Name</th>
               <th className="center">Size</th>
               <th className="center">Remain</th>
@@ -51,13 +40,11 @@ function Files({
           <tbody>
             {list.map((file) => {
               const date = new Date(file.createdAt);
-              const exp = date.getTime() / 1000 + file.ttl;
-              const now = Date.now() / 1000;
-              const time = Math.round(exp - now);
+              const time = file.remain;
               return (
                 <tr key={file.id} className={time <= 0 ? 'disabled' : ''}>
                   <td className="center">
-                    <a href="#" className="checkbox" onClick={e => select(e, file.id)}>
+                    <a href="#" className="checkbox" disabled={time <= 0} onClick={e => select(e, file.id)}>
                       {file.selected
                         ? <i className="icon icon-checked" />
                         : <i className="icon icon-unchecked" />}
@@ -65,7 +52,9 @@ function Files({
                   </td>
                   <td>
                     <div className="ellipsis">
-                      <a href={file.url} title={file.name} download>{file.name}</a>
+                      {file.url
+                        ? <a href={file.url} title={file.name} download>{file.name}</a>
+                        : <span title={file.name}>{file.name}</span>}
                     </div>
                   </td>
                   <td className="center">{humanSize(file.size, 1)}</td>
