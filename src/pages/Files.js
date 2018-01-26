@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { remain, humanSize, message } from '../utils';
 
 import './Files.less';
@@ -17,9 +18,17 @@ function Files({
       message.error('Load files failed! Please try again.');
     });
   };
+  const selected = list.reduce((p, c) => p + (c.selected ? 1 : 0), 0);
   return (
     <div className="files-section">
       <div className="layout-container">
+        <div className="files-btns">
+          <button className="btn" disabled={selected <= 0}>Make link</button>
+          <button className="btn" disabled={selected <= 0}>Send email</button>
+          <Link to="/" className="btn btn-primary">
+            <i className="icon icon-upload" />Upload
+          </Link>
+        </div>
         <table className="table table-hover">
           <colgroup>
             <col width="5%" />

@@ -1,18 +1,6 @@
-.files-section {
+.links-section {
   padding: 48px 0 32px;
 
-  .files-btns {
-    margin-bottom: 16px;
-    button.btn {
-      margin-right: 8px;
-    }
-    a.btn {
-      float: right;
-      i {
-        margin-right: 8px;
-      }
-    }
-  }
   .table {
     table-layout: fixed;
     width: 100%;
@@ -23,23 +11,29 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      span {
+        height: 22px;
+        min-width: 80px;
+        line-height: 22px;
+        display: inline-block;
+        border-radius: 12px;
+        background-color: #eee;
+        margin-right: 10px;
+        padding: 0 12px;
+        color: #666;
+        text-align: center;
+      }
     }
 
     .center {
       text-align: center;
     }
 
-    .checkbox {
-      font-weight: normal;
-      font-size: 16px;
-    }
-
     .disabled {
       color: #999;
 
-      .checkbox {
-        color: #ccc;
-        cursor: not-allowed;
+      a {
+        color: #999;
       }
 
     }

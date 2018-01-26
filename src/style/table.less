@@ -10,14 +10,14 @@
 }
 
 .table tbody tr.active, .table.table-striped tbody tr.active {
-  background: #f0f1f4;
+  background: #f5f5f5;
 }
 
 .table.table-hover tbody tr {
   transition: all .3s;
 
   &:hover {
-    background: #f0f1f4;
+    background: #f5f5f5;
   }
 
 }
@@ -35,5 +35,11 @@
 }
 
 .table th {
-  border-bottom-width: 2px;
+  background-color: #f9f9f9;
+  &:first-child {
+    border-top-left-radius: 4px;
+  }
+  &:last-child {
+    border-top-right-radius: 4px;
+  }
 }

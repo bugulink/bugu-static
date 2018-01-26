@@ -4,7 +4,6 @@ const SIZE = 20;
 
 export default {
   state: {
-    files: [],
     list: [],
     count: 0,
     offset: 0
@@ -16,6 +15,17 @@ export default {
         offset,
         limit: SIZE
       });
+      const fileMap = {};
+      data.files.forEach((file) => {
+        const id = file.link_id;
+        if (!fileMap[id]) {
+          fileMap[id] = [];
+        }
+        fileMap[id].push(file);
+      });
+      data.rows.forEach((link) => {
+        link.files = fileMap[link.id] || [];
+      });
       commit('getListDone', {
         ...data,
         isReload,
@@ -25,13 +35,11 @@ export default {
   },
   reducers: {
     getListDone(state, {
-      offset, count, rows, files, isReload
+      offset, count, rows, isReload
     }) {
       const list = isReload ? rows : [...state.list, ...rows];
-      const tmp = isReload ? files : [...state.files, ...files];
       return {
         ...state,
-        files: tmp,
         offset,
         count,
         list
