@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { message } from '../utils';
 import Upload from '../components/Upload';
 import LinkMaker from '../components/LinkMaker';
-import Modal from '../components/Modal';
-import TagInput from '../components/TagInput';
+import MailModal from '../components/MailModal';
 
 import './Home.less';
 
@@ -105,46 +104,18 @@ class Home extends Component {
       }
       return null;
     };
-    const change = data => this.setState({ mails: data });
     return (
       <div className="home-section">
         {child()}
-        <Modal
+        <MailModal
           show={showModal}
-          title="Send email via bugu.link"
+          mailto={mails}
+          text={msg}
           onClose={() => this.close()}
-        >
-          <div className="form mail-form">
-            <TagInput data={mails} placeholder="Email to" onChange={change} />
-            <div className="form-item">
-              <div className="form-control">
-                <textarea
-                  rows="3"
-                  value={msg}
-                  className="input"
-                  placeholder="Message"
-                  onChange={e => this.setState({ msg: e.target.value })}
-                />
-              </div>
-            </div>
-            <div className="btns">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => this.handleSend()}
-              >
-                Send
-              </button>
-              <button
-                type="button"
-                className="btn"
-                onClick={() => this.close()}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </Modal>
+          onSubmit={() => this.handleSend()}
+          onChangeMail={data => this.setState({ mails: data })}
+          onChangeText={text => this.setState({ msg: text })}
+        />
       </div>
     );
   }

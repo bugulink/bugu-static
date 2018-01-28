@@ -6,20 +6,18 @@ import './TagInput.less';
 
 export default class TagInput extends Component {
   static propTypes = {
+    value: PropTypes.array,
     placeholder: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   };
 
-  state = {
-    value: '',
-    list: []
+  static defaultProps = {
+    value: []
   };
 
-  componentWillReceiveProps(next) {
-    if (next.data) {
-      this.setState({ list: next.data });
-    }
-  }
+  state = {
+    text: ''
+  };
 
   press(e) {
     if (e.key === ';' || e.key === ' ' || e.key === 'Enter') {
@@ -31,25 +29,23 @@ export default class TagInput extends Component {
   }
 
   add(clear) {
-    const { onChange } = this.props;
-    const { list, value } = this.state;
-    if (isEmail(value)) {
-      const tmp = list.filter(v => v !== value);
-      tmp.push(value);
-      this.setState({ list: tmp, value: '' });
+    const { onChange, value } = this.props;
+    const { text } = this.state;
+    if (isEmail(text)) {
+      const tmp = value.filter(v => v !== text);
+      tmp.push(text);
+      this.setState({ text: '' });
       onChange(tmp);
     } else if (clear) {
-      this.setState({ value: '' });
+      this.setState({ text: '' });
     } else {
       message.error('Email is invalid!');
     }
   }
 
   remove(str) {
-    const { onChange } = this.props;
-    const { list } = this.state;
-    const tmp = list.filter(v => v !== str);
-    this.setState({ list: tmp });
+    const { onChange, value } = this.props;
+    const tmp = value.filter(v => v !== str);
     onChange(tmp);
   }
 
@@ -60,9 +56,10 @@ export default class TagInput extends Component {
   }
 
   render() {
-    const { list, value } = this.state;
-    const holder = list.length ? '' : this.props.placeholder;
-    const len = value.length + 1;
+    const { value } = this.props;
+    const { text } = this.state;
+    const holder = value.length ? '' : this.props.placeholder;
+    const len = text.length + 1;
     const size = holder ? Math.max(len, 20) : len;
     return (
       <div
@@ -72,7 +69,7 @@ export default class TagInput extends Component {
         onClick={() => this.focus()}
         onKeyPress={() => this.focus()}
       >
-        {list.map(item => (
+        {value.map(item => (
           <div className="tag" key={item}>
             {item}
             <button className="tag-close" onClick={() => this.remove(item)}>
@@ -85,9 +82,9 @@ export default class TagInput extends Component {
           type="text"
           autocomplate="off"
           placeholder={holder}
-          value={value}
+          value={text}
           size={size}
-          onChange={e => this.setState({ value: e.target.value })}
+          onChange={e => this.setState({ text: e.target.value })}
           onKeyPress={e => this.press(e)}
           onBlur={() => this.add(true)}
         />
