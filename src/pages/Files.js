@@ -130,6 +130,13 @@ class Files extends Component {
                     </tr>
                   );
                 })}
+                {list.length === 0 ? (
+                  <tr className="no-hover">
+                    <td className="center no-data" colSpan="5">
+                      <i className="icon icon-nodata" />
+                    </td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
             {offset < count ? (
