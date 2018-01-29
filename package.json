@@ -6,6 +6,7 @@
   "scripts": {
     "start": "dool server",
     "build": "rimraf dist && dool build",
+    "release": "npm run build && gulp release",
     "lint": "eslint --ext .js src"
   },
   "repository": {
@@ -44,6 +45,8 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
+    "gulp": "^3.9.1",
+    "gulp-qiniu": "^0.2.4",
     "rimraf": "^2.6.2"
   }
 }
