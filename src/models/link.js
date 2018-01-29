@@ -43,6 +43,10 @@ export default {
       const { data } = await request.post('/link/change_code', { id });
       commit('changeCodeDone', data.code);
       return data.code;
+    },
+    async remove({ commit }, id) {
+      await request.post('/link/remove', { id });
+      commit('getLinkDone', null);
     }
   },
   reducers: {

@@ -18,14 +18,14 @@ import 'file-loader?name=[name].[ext]!./assets/favicon.ico';
 const history = createHistory();
 const store = yax({
   state: {
-    loading: false
+    show: false
   },
   reducers: {
     show(state) {
-      return { ...state, loading: true };
+      return { ...state, show: true };
     },
     hide(state) {
-      return { ...state, loading: false };
+      return { ...state, show: false };
     },
   },
   modules: { user, link, file },

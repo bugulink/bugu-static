@@ -45,7 +45,7 @@ function Links({
                     <div className="ellipsis">
                       <span className="count">{files.length} files</span>
                       <Link to={`/link/${link.id}`} title={files.map(f => f.name).join('\n')}>
-                        {files.map(f => <span>{f.name}</span>)}
+                        {files.map(f => <span key={f.id}>{f.name}</span>)}
                       </Link>
                     </div>
                   </td>

@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { push } from 'yax-router';
+import Modal from '../components/Modal';
 import { remain, humanSize, message } from '../utils';
 
 import './Link.less';
 
-function Link({ item, dispatch }) {
+function Link({ item, show, dispatch }) {
   if (!item) {
     return null;
   }
@@ -34,6 +36,21 @@ function Link({ item, dispatch }) {
     } catch (err) {
       message.error('Copy failed!');
     }
+  };
+  const showModal = () => {
+    dispatch({ type: 'show' });
+  };
+  const hideModal = () => {
+    dispatch({ type: 'hide' });
+  };
+  const deleteLink = () => {
+    hideModal();
+    dispatch({
+      type: 'link/remove',
+      payload: item.id
+    }).then(() => {
+      dispatch(push('/links'));
+    }).catch(e => message.error(e.message));
   };
   return (
     <div className="link-section">
@@ -75,6 +92,9 @@ function Link({ item, dispatch }) {
                 </button>
               </div>
             )}
+            <button type="button" className="btn btn-lg remove-btn" onClick={showModal}>
+              <i className="icon icon-trash" />
+            </button>
           </div>
           {item.receiver ? (
             <div className="form-item email-info">
@@ -122,21 +142,45 @@ function Link({ item, dispatch }) {
           </tbody>
         </table>
       </div>
+      <Modal
+        show={show}
+        title="Are you absolutely sure?"
+        onClose={hideModal}
+      >
+        <div>This action cannot be undone. This will permanently delete the link.</div>
+        <div className="btns">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={deleteLink}
+          >Delete
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={hideModal}
+          >Cancel
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }
 
 Link.propTypes = {
+  show: PropTypes.bool,
   item: PropTypes.object,
   dispatch: PropTypes.func.isRequired
 };
 
 Link.defaultProps = {
+  show: false,
   item: null
 };
 
-function mapState({ link }) {
+function mapState({ link, show }) {
   return {
+    show,
     item: link.item
   };
 }
