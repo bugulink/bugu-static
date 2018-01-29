@@ -11,7 +11,9 @@ import user from './models/user';
 import link from './models/link';
 import file from './models/file';
 import Routes from './routes';
-// import * as handlers from './handlers';
+
+// eslint-disable-next-line
+import 'file-loader?name=[name].[ext]!./assets/favicon.ico';
 
 const history = createHistory();
 const store = yax({
