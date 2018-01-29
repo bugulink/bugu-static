@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
 
 import './Header.less';
@@ -20,12 +20,15 @@ function Header({ user }) {
         <div className="header-nav">
           {user ? (
             <div className="user-nav">
-              <Link className="nav-link" to="/files">
+              <NavLink className="nav-link" activeClassName="active" exact to="/">
+                <i className="icon icon-home" />
+              </NavLink>
+              <NavLink className="nav-link" activeClassName="active" exact to="/files">
                 <i className="icon icon-files" />
-              </Link>
-              <Link className="nav-link" to="/links">
+              </NavLink>
+              <NavLink className="nav-link" activeClassName="active" exact to="/links">
                 <i className="icon icon-links" />
-              </Link>
+              </NavLink>
               <div className="dropdown">
                 <div className="user-info">
                   <div className="avatar">{user.email.slice(0, 1).toUpperCase()}</div>

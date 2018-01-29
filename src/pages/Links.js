@@ -43,8 +43,10 @@ function Links({
                 <tr key={link.id} className={time <= 0 ? 'disabled' : ''}>
                   <td>
                     <div className="ellipsis">
-                      <span>{files.length} files</span>
-                      <Link to={`/link/${link.id}`}>{files[0].name}</Link>
+                      <span className="count">{files.length} files</span>
+                      <Link to={`/link/${link.id}`} title={files.map(f => f.name).join('\n')}>
+                        {files.map(f => <span>{f.name}</span>)}
+                      </Link>
                     </div>
                   </td>
                   <td className="center">{humanSize(size, 1)}</td>
