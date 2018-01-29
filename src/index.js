@@ -16,7 +16,7 @@ import Routes from './routes';
 const history = createHistory();
 const store = yax({
   state: {
-    loading: false,
+    loading: false
   },
   reducers: {
     show(state) {
@@ -43,6 +43,15 @@ store.onRoute('/links', ({ dispatch }) => {
     payload: true
   }).catch(() => {
     message.error('Load files failed! Please try again.');
+  });
+});
+store.onRoute('/link/:linkId', ({ match, dispatch }) => {
+  const { linkId } = match.params;
+  dispatch({
+    type: 'link/getLink',
+    payload: linkId
+  }).catch((e) => {
+    message.error(e.message);
   });
 });
 

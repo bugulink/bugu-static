@@ -6,7 +6,8 @@ export default {
   state: {
     list: [],
     count: 0,
-    offset: 0
+    offset: 0,
+    item: null
   },
   actions: {
     async getList({ commit, select }, isReload) {
@@ -31,6 +32,17 @@ export default {
         isReload,
         offset: offset + SIZE
       });
+    },
+    async getLink({ commit }, id) {
+      commit('getLinkDone', null);
+      const { data } = await request.post('/link/detail', { id });
+      const { link, files } = data;
+      commit('getLinkDone', { ...link, files });
+    },
+    async changeCode({ commit }, id) {
+      const { data } = await request.post('/link/change_code', { id });
+      commit('changeCodeDone', data.code);
+      return data.code;
     }
   },
   reducers: {
@@ -44,6 +56,13 @@ export default {
         count,
         list
       };
+    },
+    getLinkDone(state, item) {
+      return { ...state, item };
+    },
+    changeCodeDone(state, code) {
+      const { item } = state;
+      return { ...state, item: { ...item, code } };
     }
   }
 };
