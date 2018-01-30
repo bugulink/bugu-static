@@ -13,6 +13,6 @@ const config = {
 gulp.task('release', () => {
   return gulp.src('dist/**')
     .pipe(qiniu(config, {
-      dir: join('/', pkg.name, pkg.version)
+      dir: join('/', pkg.version)
     }));
 });
