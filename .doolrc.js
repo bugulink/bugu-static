@@ -6,7 +6,7 @@ module.exports = {
     'download.css': './src/download.less',
     'error.css': './src/error.less'
   },
-  publicPath: prod ? process.env.BUGU_STATIC : '/',
+  publicPath: prod ? process.env.BUGU_STATIC : 'http://localhost:8000/',
   babelPlugins: ['transform-runtime'],
   devServer: {
     historyApiFallback: {
