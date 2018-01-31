@@ -6,7 +6,7 @@ import fetch from '../request';
 
 // Chunk size 4M (force)
 const CHUNK_SIZE = 4 * 1024 * 1024;
-const HOST = '//up.qiniu.com';
+const HOST = '//up.qbox.me';
 
 class Chunk {
   constructor(file, offset, opts) {
