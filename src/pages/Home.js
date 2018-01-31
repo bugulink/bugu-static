@@ -70,8 +70,8 @@ class Home extends Component {
       if (!user) {
         return (
           <div className="home-intro">
-            <h3>Sharing Your Files</h3>
-            <p>Free &bull; Fast &bull; Secure &bull; Simplicity</p>
+            <h3>Share Your Files</h3>
+            <p>Free<span>&bull;</span>Fast<span>&bull;</span>Secure<span>&bull;</span>Simple</p>
             <a href="/login" className="btn btn-primary btn-lg">Start to share</a>
           </div>
         );
