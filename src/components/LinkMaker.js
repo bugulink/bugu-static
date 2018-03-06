@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { message } from '../utils';
+import { message, copy } from '../utils';
 import fetch from '../request';
 
 import './LinkMaker.less';
@@ -54,19 +54,6 @@ export default class LinkMaker extends Component {
     const { mails } = this.props;
     const { status, link } = this.state;
     const path = `${window.location.protocol}//${window.location.host}/download/`;
-    const copy = (e) => {
-      e.target.select();
-      try {
-        const isOk = document.execCommand('copy');
-        if (isOk) {
-          message.success('Copy success!');
-        } else {
-          message.error('Copy failed!');
-        }
-      } catch (err) {
-        message.error('Copy failed!');
-      }
-    };
     const child = () => {
       if (status === 'loading') {
         const txt = mails ? 'Sending email' : 'Making link';

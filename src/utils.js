@@ -91,3 +91,29 @@ export const message = {
     toast(msg, 'error', 'icon-close-r');
   }
 };
+
+export function copy(e) {
+  const elem = e.target;
+  // From: https://github.com/zenorocha/select
+  const isReadOnly = elem.hasAttribute('readonly');
+  if (!isReadOnly) {
+    elem.setAttribute('readonly', '');
+  }
+
+  elem.select();
+  elem.setSelectionRange(0, elem.value.length);
+
+  if (!isReadOnly) {
+    elem.removeAttribute('readonly');
+  }
+  try {
+    const isOk = document.execCommand('copy');
+    if (isOk) {
+      message.success('Copy success!');
+    } else {
+      message.error('Copy failed!');
+    }
+  } catch (err) {
+    message.error('Copy failed!');
+  }
+}

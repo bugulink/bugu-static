@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'yax-router';
 import Modal from '../components/Modal';
-import { remain, humanSize, message } from '../utils';
+import { remain, humanSize, message, copy } from '../utils';
 
 import './Link.less';
 
@@ -23,19 +23,6 @@ function Link({ item, show, dispatch }) {
     }).catch((e) => {
       message.error(e.message);
     });
-  };
-  const copy = (e) => {
-    e.target.select();
-    try {
-      const isOk = document.execCommand('copy');
-      if (isOk) {
-        message.success('Copy success!');
-      } else {
-        message.error('Copy failed!');
-      }
-    } catch (err) {
-      message.error('Copy failed!');
-    }
   };
   const showModal = () => {
     dispatch({ type: 'show' });
