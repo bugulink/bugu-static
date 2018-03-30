@@ -12,10 +12,13 @@ import Files from './pages/Files';
 import Links from './pages/Links';
 import Link from './pages/Link';
 
-const Routes = ({ history, user }) => (
+const Routes = ({ history, user, dispatch }) => (
   <Router history={history}>
     <div className="main">
-      <Header user={user} />
+      <Header
+        user={user}
+        getCapacity={show => dispatch({ type: 'user/getCapacity', payload: show })}
+      />
       <div className="main-wrapper">
         <Switch>
           <Route exact path="/" component={Home} />
@@ -31,16 +34,15 @@ const Routes = ({ history, user }) => (
 );
 Routes.propTypes = {
   user: PropTypes.any,
-  history: PropTypes.any.isRequired
+  history: PropTypes.any.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 Routes.defaultProps = {
   user: null
 };
 
 function mapState({ user }) {
-  return {
-    user: user.info
-  };
+  return { user };
 }
 
 export default connect(mapState)(Routes);

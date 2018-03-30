@@ -26,7 +26,7 @@ export function remain(ttl) {
 }
 
 const mags = ' KMGTPEZY';
-export function humanSize(bytes, precision) {
+export function humanSize(bytes, precision = 1) {
   const magnitude = Math.min(Math.log(bytes) / Math.log(1024) | 0, mags.length - 1);
   const result = bytes / (1024 ** magnitude);
   const suffix = `${mags[magnitude].trim()}B`;

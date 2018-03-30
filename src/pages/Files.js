@@ -124,7 +124,7 @@ class Files extends Component {
                             : <span title={file.name}>{file.name}</span>}
                         </div>
                       </td>
-                      <td className="center">{humanSize(file.size, 1)}</td>
+                      <td className="center">{humanSize(file.size)}</td>
                       <td className="center">{remain(time)}</td>
                       <td className="center">{date.toLocaleString()}</td>
                     </tr>

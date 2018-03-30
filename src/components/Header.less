@@ -45,8 +45,11 @@
         height: 59px;
         line-height: 59px;
         padding: 0 15px;
-        font-size: 18px;
         text-decoration: none;
+
+        i {
+          font-size: 18px;
+        }
 
         &.active {
           background-color: #f1f1f1;
@@ -55,17 +58,34 @@
       }
 
       .dropdown {
-        padding: 5px 12px;
+        padding: 0 10px;
+        margin-left: 10px;
       }
 
-      .user-info .avatar {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        border-radius: 50%;
-        text-align: center;
-        background-color: #f1f1f1;
+      .user-info {
+        outline: 0;
+
+        .avatar {
+          display: inline-block;
+          width: 28px;
+          height: 28px;
+          color: #fff;
+          font-weight: 500;
+          line-height: 28px;
+          border-radius: 50%;
+          text-align: center;
+          background-color: #fb7560;
+          margin-right: 6px;
+        }
+
+      }
+
+      .email {
+        font-size: 16px;
+      }
+
+      .size {
+        color: #888;
       }
 
     }

@@ -2,13 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
+import { humanSize } from '../utils';
 
 import './Header.less';
 
 const HomeLink = () => <Link to="/" className="btn"><i className="icon icon-home" /></Link>;
 const LoginLink = () => <Link to="/login" className="btn btn-primary">Sign in</Link>;
 
-function Header({ user }) {
+function Header({ user, getCapacity }) {
+  const { info, visible, capacity } = user;
+  const hide = () => {
+    getCapacity(false);
+    document.removeEventListener('click', hide);
+  };
+  const show = () => {
+    getCapacity(true);
+    document.addEventListener('click', hide);
+  };
   return (
     <div className="header">
       <div className="layout-container clearfix">
@@ -18,7 +28,7 @@ function Header({ user }) {
           </Link>
         </div>
         <div className="header-nav">
-          {user ? (
+          {info ? (
             <div className="user-nav">
               <NavLink className="nav-link" activeClassName="active" exact to="/">
                 <i className="icon icon-home" />
@@ -29,12 +39,16 @@ function Header({ user }) {
               <NavLink className="nav-link" activeClassName="active" exact to="/links">
                 <i className="icon icon-links" />
               </NavLink>
-              <div className="dropdown">
-                <div className="user-info">
-                  <div className="avatar">{user.email.slice(0, 1).toUpperCase()}</div>
+              <div className={`nav-link dropdown${visible ? ' active' : ''}`}>
+                <div className="user-info" role="button" onClick={show} onKeyPress={show} tabIndex={0}>
+                  <div className="avatar">{info.email.slice(0, 1).toUpperCase()}</div>
+                  <div className="dropdown-caret" />
                 </div>
                 <ul className="dropdown-menu">
-                  <li>{user.email}</li>
+                  <li className="text">
+                    <div className="email">{info.email}</div>
+                    <div className="size">{humanSize(capacity.used)} / {humanSize(capacity.total)}</div>
+                  </li>
                   <li className="divider" />
                   <li><a href="/logout">Logout</a></li>
                 </ul>
@@ -55,10 +69,12 @@ function Header({ user }) {
 }
 
 Header.propTypes = {
-  user: PropTypes.any
+  user: PropTypes.any,
+  getCapacity: PropTypes.func
 };
 Header.defaultProps = {
-  user: null
+  user: null,
+  getCapacity: () => {}
 };
 
 export default Header;

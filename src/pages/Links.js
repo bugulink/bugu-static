@@ -49,7 +49,7 @@ function Links({
                       </Link>
                     </div>
                   </td>
-                  <td className="center">{humanSize(size, 1)}</td>
+                  <td className="center">{humanSize(size)}</td>
                   <td className="center">{remain(time)}</td>
                   <td className="center">{date.toLocaleString()}</td>
                 </tr>
