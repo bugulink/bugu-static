@@ -171,8 +171,8 @@ export default class File extends Component {
     }).then((res) => {
       onFinish(res.data);
       this.setState({ status: 'finished' });
-    }).catch(() => {
-      message.error('Upload file failed! Please retry again.');
+    }).catch((err) => {
+      message.error(err.message);
       this.setState({ status: 'failed' });
     });
   }
