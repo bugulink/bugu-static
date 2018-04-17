@@ -130,6 +130,12 @@ class Login extends Component {
                   </span>
                 </div>
               </div>
+              <div className="form-item">
+                <p>
+                  <input type="checkbox" checked disabled />
+                  I have read and agree to <a href="/terms">the terms of use.</a>
+                </p>
+              </div>
               <button
                 type="button"
                 className="btn btn-primary btn-lg btn-block"
