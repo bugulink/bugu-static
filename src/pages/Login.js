@@ -132,7 +132,7 @@ class Login extends Component {
               </div>
               <div className="form-item">
                 <p>
-                  <input type="checkbox" checked disabled />
+                  <input type="checkbox" checked />
                   I have read and agree to <a href="/terms" target="_blank">the terms of use.</a>
                 </p>
               </div>
