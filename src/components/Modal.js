@@ -10,7 +10,7 @@ function Modal({
     <div className={show ? 'modal show' : 'modal'}>
       <div className="modal-dialog">
         <div className="modal-content">
-          <button className="modal-close" onClick={e => onClose(e)}>
+          <button type="button" className="modal-close" onClick={e => onClose(e)}>
             <i className="icon icon-close" />
           </button>
           <div className="modal-header">{title}</div>

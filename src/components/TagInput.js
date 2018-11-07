@@ -56,9 +56,9 @@ export default class TagInput extends Component {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, placeholder } = this.props;
     const { text } = this.state;
-    const holder = value.length ? '' : this.props.placeholder;
+    const holder = value.length ? '' : placeholder;
     const len = text.length + 1;
     const size = holder ? Math.max(len, 20) : len;
     return (
@@ -72,7 +72,7 @@ export default class TagInput extends Component {
         {value.map(item => (
           <div className="tag" key={item}>
             {item}
-            <button className="tag-close" onClick={() => this.remove(item)}>
+            <button type="button" className="tag-close" onClick={() => this.remove(item)}>
               <i className="icon icon-close" />
             </button>
           </div>

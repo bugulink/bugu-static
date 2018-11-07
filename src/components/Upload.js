@@ -21,6 +21,7 @@ export default class Uploader extends Component {
     onMake: PropTypes.func.isRequired,
     onSend: PropTypes.func.isRequired
   };
+
   state = {
     files: []
   };
@@ -117,17 +118,21 @@ export default class Uploader extends Component {
         </div>
         <div className="link-btns">
           <button
+            type="button"
             disabled={!isAllDone}
             className="btn btn-primary btn-lg"
             onClick={() => onMake(list)}
-          >Make link
+          >
+            Make link
           </button>
           <span>OR</span>
           <button
+            type="button"
             disabled={!isAllDone}
             className="btn btn-primary btn-lg"
             onClick={() => onSend(list)}
-          >Send email
+          >
+            Send email
           </button>
         </div>
       </div>

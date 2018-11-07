@@ -71,7 +71,15 @@ class Home extends Component {
         return (
           <div className="home-intro">
             <h3>Share Your Files</h3>
-            <p>Free<span>&bull;</span>Fast<span>&bull;</span>Secure<span>&bull;</span>Simple</p>
+            <p>
+              Free
+              <span>&bull;</span>
+              Fast
+              <span>&bull;</span>
+              Secure
+              <span>&bull;</span>
+              Simple
+            </p>
             <a href="/login" className="btn btn-primary btn-lg">Start to share</a>
           </div>
         );

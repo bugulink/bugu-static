@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'yax-router';
 import Modal from '../components/Modal';
-import { remain, humanSize, message, copy } from '../utils';
+import {
+  remain, humanSize, message, copy
+} from '../utils';
 
 import './Link.less';
 
@@ -86,7 +88,8 @@ function Link({ item, show, dispatch }) {
           {item.receiver ? (
             <div className="form-item email-info">
               <div className="title">
-                <strong>To:</strong>{item.receiver}
+                <strong>To:</strong>
+                {item.receiver}
               </div>
               <div className="content">{item.message || 'No message'}</div>
             </div>
@@ -140,13 +143,15 @@ function Link({ item, show, dispatch }) {
             type="button"
             className="btn btn-primary"
             onClick={deleteLink}
-          >Delete
+          >
+            Delete
           </button>
           <button
             type="button"
             className="btn"
             onClick={hideModal}
-          >Cancel
+          >
+            Cancel
           </button>
         </div>
       </Modal>

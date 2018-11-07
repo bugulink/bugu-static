@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../components/Modal';
-import TagInput from '../components/TagInput';
+import Modal from './Modal';
+import TagInput from './TagInput';
 
 import './MailModal.less';
 
@@ -32,13 +32,15 @@ function MailModal({
             type="button"
             className="btn btn-primary"
             onClick={onSubmit}
-          >Send
+          >
+            Send
           </button>
           <button
             type="button"
             className="btn"
             onClick={onClose}
-          >Cancel
+          >
+            Cancel
           </button>
         </div>
       </div>

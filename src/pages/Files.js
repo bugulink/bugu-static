@@ -81,10 +81,11 @@ class Files extends Component {
         return (
           <div className="layout-container">
             <div className="files-btns">
-              <button className="btn" disabled={arr.length === 0} onClick={() => this.makeLink()}>Make link</button>
-              <button className="btn" disabled={arr.length === 0} onClick={() => this.sendMail()}>Send email</button>
+              <button type="button" className="btn" disabled={arr.length === 0} onClick={() => this.makeLink()}>Make link</button>
+              <button type="button" className="btn" disabled={arr.length === 0} onClick={() => this.sendMail()}>Send email</button>
               <Link to="/" className="btn btn-primary">
-                <i className="icon icon-upload" />Upload
+                <i className="icon icon-upload" />
+                Upload
               </Link>
             </div>
             <table className="table table-hover">
@@ -141,7 +142,7 @@ class Files extends Component {
             </table>
             {offset < count ? (
               <div className="load-more">
-                <button className="btn btn-lg" onClick={loadMore}>Load more...</button>
+                <button type="button" className="btn btn-lg" onClick={loadMore}>Load more...</button>
               </div>
             ) : null}
           </div>

@@ -47,7 +47,8 @@ export default class LinkMaker extends Component {
   }
 
   back() {
-    this.props.onBack();
+    const { onBack } = this.props;
+    onBack();
   }
 
   render() {
@@ -60,7 +61,10 @@ export default class LinkMaker extends Component {
         return (
           <div className="link-body">
             <i className="icon icon-loading loading" />
-            <div className="muted">{txt}...</div>
+            <div className="muted">
+              {txt}
+              ...
+            </div>
           </div>
         );
       }
@@ -69,17 +73,24 @@ export default class LinkMaker extends Component {
         return (
           <div className="link-body">
             <i className="icon icon-close-r error" />
-            <div className="muted">{txt} failed! Please retry.</div>
+            <div className="muted">
+              {txt}
+              &nbsp;failed! Please retry.
+            </div>
             <div className="btns">
               <button
+                type="button"
                 className="btn btn-primary"
                 onClick={() => this.makeLink()}
-              >Retry
+              >
+                Retry
               </button>
               <button
+                type="button"
                 className="btn"
                 onClick={() => this.back()}
-              >Cancel
+              >
+                Cancel
               </button>
             </div>
           </div>
@@ -92,8 +103,14 @@ export default class LinkMaker extends Component {
         return (
           <div className="link-body">
             <i className="icon icon-check-r success" />
-            <h3>{title} success!</h3>
-            <div className="muted">{txt} your download link and code.</div>
+            <h3>
+              {title}
+              &nbsp;success!
+            </h3>
+            <div className="muted">
+              {txt}
+              &nbsp;your download link and code.
+            </div>
             <div className="form">
               <div className="form-item">
                 <div className="form-control">
@@ -122,9 +139,11 @@ export default class LinkMaker extends Component {
             </div>
             <div className="btns">
               <button
+                type="button"
                 className="btn btn-primary"
                 onClick={() => this.back()}
-              >Continue
+              >
+                Continue
               </button>
             </div>
           </div>
