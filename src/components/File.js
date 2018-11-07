@@ -71,6 +71,7 @@ class Chunk {
       message.error('Something wrong! Please restart again.');
     });
   }
+
   stop() {
     if (!this.finished) {
       this.cts.cancel();
@@ -79,6 +80,7 @@ class Chunk {
       this.opts.change();
     }
   }
+
   resume() {
     if (!this.finished) {
       this.start();
@@ -100,6 +102,7 @@ export default class File extends Component {
   };
 
   count = 0;
+
   chunks = [];
 
   componentWillMount() {
@@ -179,8 +182,9 @@ export default class File extends Component {
 
   delete(e) {
     e.preventDefault();
+    const { onDelete } = this.props;
     this.chunks.forEach(c => c.stop());
-    this.props.onDelete(e);
+    onDelete(e);
   }
 
   render() {

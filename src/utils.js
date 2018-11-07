@@ -18,7 +18,8 @@ export function remain(ttl) {
   const { round } = Math;
   if (ttl < 3600) {
     return pluralize(round(ttl / 60), ' minute');
-  } else if (ttl < 86400) {
+  }
+  if (ttl < 86400) {
     return pluralize(round(ttl / 3600), ' hour');
   }
 

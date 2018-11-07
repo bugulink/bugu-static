@@ -47,7 +47,11 @@ function Header({ user, getCapacity }) {
                 <ul className="dropdown-menu">
                   <li className="text">
                     <div className="email">{info.email}</div>
-                    <div className="size">{humanSize(capacity.used)} / {humanSize(capacity.total)}</div>
+                    <div className="size">
+                      {humanSize(capacity.used)}
+                      &nbsp;/&nbsp;
+                      {humanSize(capacity.total)}
+                    </div>
                   </li>
                   <li className="divider" />
                   <li><a href="/logout">Logout</a></li>

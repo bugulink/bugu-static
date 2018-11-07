@@ -7,7 +7,7 @@ module.exports = {
     'error.css': './src/error.less'
   },
   publicPath: prod ? process.env.BUGU_STATIC : 'http://localhost:8000/',
-  babelPlugins: ['transform-runtime'],
+  babelPlugins: ['@babel/plugin-transform-runtime'],
   devServer: {
     historyApiFallback: {
       rewrites: [{

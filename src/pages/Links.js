@@ -43,7 +43,10 @@ function Links({
                 <tr key={link.id} className={time <= 0 ? 'disabled' : ''}>
                   <td>
                     <div className="ellipsis">
-                      <span className="count">{files.length} files</span>
+                      <span className="count">
+                        {files.length}
+                        &nbsp;files
+                      </span>
                       <Link to={`/link/${link.id}`} title={files.map(f => f.name).join('\n')}>
                         {files.map(f => <span key={f.id}>{f.name}</span>)}
                       </Link>
@@ -66,7 +69,7 @@ function Links({
         </table>
         {offset < count ? (
           <div className="load-more">
-            <button className="btn btn-lg" onClick={loadMore}>Load more...</button>
+            <button type="button" className="btn btn-lg" onClick={loadMore}>Load more...</button>
           </div>
         ) : null}
       </div>
