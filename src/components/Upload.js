@@ -46,8 +46,9 @@ export default class Uploader extends Component {
     const { files } = this.state;
     for (let i = 0; i < items.length; i++) {
       items[i].id = uuid();
+      files.push(items[i]);
     }
-    this.setState({ files: [...files, ...items] });
+    this.setState({ files });
   }
 
   delete(file) {
