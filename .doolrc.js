@@ -1,4 +1,9 @@
-const prod = process.env.NODE_ENV === 'production';
+const pkg = require('./package.json');
+
+const host = process.env.BUGU_STATIC_HOST;
+const publicPath = process.env.NODE_ENV === 'production'
+  ? `${host}/${pkg.name}/${pkg.version}/`
+  : 'http://localhost:8000/';
 
 module.exports = {
   entry: {
@@ -6,7 +11,7 @@ module.exports = {
     'download.css': './src/download.less',
     'error.css': './src/error.less'
   },
-  publicPath: prod ? process.env.BUGU_STATIC : 'http://localhost:8000/',
+  publicPath: publicPath,
   babelPlugins: ['@babel/plugin-transform-runtime'],
   devServer: {
     historyApiFallback: {
