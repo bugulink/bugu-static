@@ -6,7 +6,7 @@
   "scripts": {
     "start": "dool server",
     "build": "rimraf dist && dool build",
-    "release": "npm run build && gulp release",
+    "release": "npm run build && up",
     "lint": "eslint --ext .js src"
   },
   "repository": {
@@ -26,29 +26,29 @@
   },
   "homepage": "https://github.com/bugulink/bugu-static#readme",
   "dependencies": {
-    "axios": "^0.18.0",
-    "history": "^4.7.2",
+    "axios": "^0.19.0",
+    "history": "^4.9.0",
     "prop-types": "^15.6.2",
-    "react": "^16.6.1",
-    "react-dom": "^16.6.1",
-    "react-redux": "^6.0.1",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
-    "yax": "^0.4.0",
-    "yax-router": "0.2.0"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "yax": "^0.4.2",
+    "yax-router": "^0.2.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/runtime": "^7.1.5",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "gulp": "^3.9.1",
-    "gulp-qiniu": "^0.2.4",
-    "rimraf": "^2.6.2"
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.2.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "fast-up": "^1.0.1",
+    "rimraf": "^3.0.0"
   }
 }
