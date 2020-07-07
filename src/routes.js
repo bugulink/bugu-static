@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Router } from 'yax-router';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
 
 import Header from './components/Header';
@@ -12,8 +12,8 @@ import Files from './pages/Files';
 import Links from './pages/Links';
 import Link from './pages/Link';
 
-const Routes = ({ history, user, dispatch }) => (
-  <Router history={history}>
+const Routes = ({ user, dispatch }) => (
+  <Router>
     <div className="main">
       <Header
         user={user}
@@ -34,7 +34,6 @@ const Routes = ({ history, user, dispatch }) => (
 );
 Routes.propTypes = {
   user: PropTypes.any,
-  history: PropTypes.any.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 Routes.defaultProps = {

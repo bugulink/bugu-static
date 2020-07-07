@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { push } from 'yax-router';
+import { useHistory, useParams } from 'react-router-dom';
 import Modal from '../components/Modal';
 import {
   remain, humanSize, message, copy
@@ -10,6 +10,18 @@ import {
 import './Link.less';
 
 function Link({ item, show, dispatch }) {
+  const history = useHistory();
+  const { linkId } = useParams();
+
+  useEffect(() => {
+    dispatch({
+      type: 'link/getLink',
+      payload: linkId
+    }).catch((e) => {
+      message.error(e.message);
+    });
+  }, [linkId]);
+
   if (!item) {
     return null;
   }
@@ -38,7 +50,7 @@ function Link({ item, show, dispatch }) {
       type: 'link/remove',
       payload: item.id
     }).then(() => {
-      dispatch(push('/links'));
+      history.push('/links');
     }).catch(e => message.error(e.message));
   };
   return (

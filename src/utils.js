@@ -118,3 +118,67 @@ export function copy(e) {
     message.error('Copy failed!');
   }
 }
+
+export function toArray(list) {
+  return Array.prototype.slice.call(list || [], 0);
+}
+
+function readDir(dirReader, oldEntries, callback) {
+  dirReader.readEntries((entries) => {
+    const newEntries = [...oldEntries, ...entries];
+    if (entries.length) {
+      setTimeout(() => {
+        readDir(dirReader, newEntries, callback);
+      }, 0);
+    } else {
+      callback(newEntries);
+    }
+  }, () => {
+    callback(oldEntries);
+  });
+}
+
+function getRelativePath(file) {
+  if (!file.fullPath || file.fullPath === `/${file.name}`) {
+    return null;
+  }
+  return file.fullPath;
+}
+
+function fromEntry(dt) {
+  const files = [];
+  const allPromises = [];
+  const traverseFile = entry => new Promise((resolve) => {
+    if (entry.isFile) {
+      entry.file((file) => {
+        file.relativePath = getRelativePath(entry);
+        files.push(file);
+        resolve();
+      }, () => {
+        resolve();
+      });
+    } else if (entry.isDirectory) {
+      const dirReader = entry.createReader();
+      readDir(dirReader, [], (entries) => {
+        const promises = entries.map(e => traverseFile(e));
+        Promise.all(promises).then(() => resolve());
+      });
+    }
+  });
+
+  toArray(dt.items).forEach((item) => {
+    const entry = item.webkitGetAsEntry();
+    if (entry) {
+      allPromises.push(traverseFile(entry));
+    }
+  });
+  return Promise.all(allPromises).then(() => files);
+}
+
+export function getDropFiles(dt) {
+  if (dt.items && dt.items[0] && 'webkitGetAsEntry' in dt.items[0]) {
+    return fromEntry(dt);
+  }
+  const files = toArray(dt.files);
+  return Promise.resolve(files);
+}

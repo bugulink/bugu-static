@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import File from './File';
-import { message } from '../utils';
+import { message, getDropFiles, toArray } from '../utils';
 import fetch from '../request';
 
 import './Upload.less';
-
-function preventEvent(e) {
-  e.preventDefault();
-}
 
 let index = 0;
 function uuid() {
@@ -32,12 +28,14 @@ export default class Uploader extends Component {
 
   handleDrop(e) {
     e.preventDefault();
-    this.addFiles(e.dataTransfer.files);
+    if (e.type === 'dragover') return;
+    getDropFiles(e.dataTransfer)
+      .then(files => this.addFiles(files));
   }
 
   handleChange(e) {
     if (e.target.value) {
-      this.addFiles(e.target.files);
+      this.addFiles(toArray(e.target.files));
       e.target.value = '';
     }
   }
@@ -92,8 +90,7 @@ export default class Uploader extends Component {
           className="drop-block"
           onClick={() => this.handleClick()}
           onKeyPress={() => this.handleClick()}
-          onDragOver={preventEvent}
-          onDragEnter={preventEvent}
+          onDragOver={e => this.handleDrop(e)}
           onDrop={e => this.handleDrop(e)}
         >
           <i className="icon icon-upload" />

@@ -23,7 +23,7 @@ export default class LinkMaker extends Component {
     status: 'loading'
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.makeLink();
   }
 

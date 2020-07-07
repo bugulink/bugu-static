@@ -1,157 +1,147 @@
-import React, { Component } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { push } from 'yax-router';
+import { useHistory } from 'react-router-dom';
 import { isEmail } from '../utils';
 
 import './Login.less';
 
-class Login extends Component {
-  static propTypes = {
-    dispatch: PropTypes.any.isRequired
-  };
+function Login({ dispatch }) {
+  const [sending, setSending] = useState(false);
+  const [count, setCount] = useState(60);
+  const [isFirst, setFirst] = useState(true);
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+  const timer = useRef(null);
+  const history = useHistory();
 
-  state = {
-    sending: false,
-    count: 60,
-    isFirst: true,
-    email: '',
-    code: ''
-  };
+  useEffect(() => () => {
+    window.clearInterval(timer.current);
+  }, []);
 
-  sendCode() {
-    const { dispatch } = this.props;
-    const { email } = this.state;
-    if (!this.checkEmail(email)) {
-      return this.setState({ isFirst: false });
+  const checkEmail = (str) => {
+    if (!str) {
+      setError('Email is required');
+      return false;
     }
-    return dispatch({
+    if (!isEmail(str)) {
+      setError('Email is invalid');
+      return false;
+    }
+    setError(null);
+    return true;
+  };
+  const sendCode = () => {
+    if (!checkEmail(email)) {
+      setFirst(false);
+      return;
+    }
+    dispatch({
       type: 'user/sendCode',
       payload: email
     }).then(() => {
-      this.setState({ success: 'Please check your email to get code.', sending: true });
-      let count = 60;
-      const timer = window.setInterval(() => {
-        count--;
-        if (count === 0) {
-          this.timer = null;
-          window.clearInterval(timer);
-          this.setState({ sending: false });
+      setError(null);
+      setSuccess('Please check your email to get code.');
+      setSending(true);
+      let t = 60;
+      timer.current = window.setInterval(() => {
+        t--;
+        if (t === 0) {
+          window.clearInterval(timer.current);
+          setSending(false);
         } else {
-          this.setState({ count });
+          setCount(t);
         }
       }, 1000);
-      this.timer = timer;
     }).catch(() => {
-      this.setState({ error: 'Failed to send mail. Please try again.' });
+      setSuccess(null);
+      setError('Failed to send mail. Please try again.');
     });
-  }
-
-  componentWillUnmount() {
-    if (this.timer) {
-      window.clearInterval(this.timer);
-    }
-  }
-
-  checkEmail(email) {
-    if (!email) {
-      this.setState({ error: 'Email is required' });
-      return false;
-    }
-    if (!isEmail(email)) {
-      this.setState({ error: 'Email is invalid' });
-      return false;
-    }
-    this.setState({ error: null });
-    return true;
-  }
-
-  updateEmail(email) {
-    const { isFirst } = this.state;
+  };
+  const updateEmail = (str) => {
     if (!isFirst) {
-      this.checkEmail(email);
+      checkEmail(str);
     }
-    this.setState({ email });
-  }
-
-  login() {
-    const { dispatch } = this.props;
-    const { email, code } = this.state;
+    setEmail(str);
+  };
+  const login = () => {
     dispatch({
       type: 'user/login',
       payload: { email, code }
     }).then(() => {
-      dispatch(push('/'));
+      history.push('/');
     }).catch((e) => {
-      this.setState({ error: e.message });
+      setError(e.message);
     });
-  }
+  };
 
-  render() {
-    const {
-      email, code, error, success, sending, count
-    } = this.state;
-    return (
-      <div className="login-section">
-        <div className="login-form">
-          <div className="main">
-            <form className="form login-content">
-              <div className="form-item">
-                <div className="form-control">
-                  <span className="input-prefix">
-                    <i className="icon icon-user" />
-                  </span>
-                  <input
-                    type="email"
-                    name="email"
-                    className="input"
-                    placeholder="Your Email"
-                    value={email}
-                    onChange={e => this.updateEmail(e.target.value)}
-                  />
-                </div>
+  return (
+    <div className="login-section">
+      <div className="login-form">
+        <div className="main">
+          <form className="form login-content">
+            <div className="form-item">
+              <div className="form-control">
+                <span className="input-prefix">
+                  <i className="icon icon-user" />
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  className="input"
+                  placeholder="Your Email"
+                  value={email}
+                  onChange={e => updateEmail(e.target.value)}
+                />
               </div>
-              <div className="form-item">
-                <div className="form-control">
-                  <span className="input-prefix">
-                    <i className="icon icon-lock" />
-                  </span>
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="Security Code"
-                    value={code}
-                    onChange={e => this.setState({ code: e.target.value })}
-                  />
-                  <span className="input-suffix">
-                    <button type="button" className="btn btn-lg send-btn" disabled={sending} onClick={() => this.sendCode()}>
-                      {sending ? `${count} s` : 'Send code'}
-                    </button>
-                  </span>
-                </div>
+            </div>
+            <div className="form-item">
+              <div className="form-control">
+                <span className="input-prefix">
+                  <i className="icon icon-lock" />
+                </span>
+                <input
+                  type="text"
+                  className="input"
+                  placeholder="Security Code"
+                  value={code}
+                  onChange={e => setCode(e.target.value)}
+                />
+                <span className="input-suffix">
+                  <button type="button" className="btn btn-lg send-btn" disabled={sending} onClick={sendCode}>
+                    {sending ? `${count} s` : 'Send code'}
+                  </button>
+                </span>
               </div>
-              <div className="form-item">
-                <p>
-                  <input type="checkbox" checked />
-                  I have read and agree to&nbsp;
-                  <a href="/terms" target="_blank">the terms of use.</a>
-                </p>
-              </div>
-              <button
-                type="button"
-                className="btn btn-primary btn-lg btn-block"
-                disabled={!(email && code)}
-                onClick={() => this.login()}
-              >
-                Sign in
-              </button>
-              {error ? <div className="alert alert-error">{error}</div> : null}
-              {success ? <div className="alert alert-success">{success}</div> : null}
-            </form>
-          </div>
+            </div>
+            <div className="form-item">
+              <p>
+                <input type="checkbox" readOnly checked />
+                I have read and agree to&nbsp;
+                <a href="/terms" target="_blank">the terms of use.</a>
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn btn-primary btn-lg btn-block"
+              disabled={!(email && code)}
+              onClick={login}
+            >
+              Sign in
+            </button>
+            {error ? <div className="alert alert-error">{error}</div> : null}
+            {success ? <div className="alert alert-success">{success}</div> : null}
+          </form>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+Login.propTypes = {
+  dispatch: PropTypes.any.isRequired
+};
+
 export default connect()(Login);

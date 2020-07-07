@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,14 @@ import './Links.less';
 function Links({
   list, count, offset, dispatch
 }) {
+  useEffect(() => {
+    dispatch({
+      type: 'link/getList',
+      payload: true
+    }).catch(() => {
+      message.error('Load files failed! Please try again.');
+    });
+  }, []);
   const loadMore = () => {
     dispatch({ type: 'link/getList' }).catch(() => {
       message.error('Load links failed! Please try again.');

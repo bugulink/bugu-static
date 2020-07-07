@@ -105,7 +105,7 @@ export default class File extends Component {
 
   chunks = [];
 
-  componentWillMount() {
+  componentDidMount() {
     const { file } = this.props;
     const len = Math.ceil(file.size / CHUNK_SIZE);
     for (let i = 0; i < len; i++) {
